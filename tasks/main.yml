@@ -1,0 +1,25 @@
+---
+- name: apt update cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600 # 1 hr
+  become: true
+
+- name: Install docker engine
+  ansible.builtin.import_tasks: docker-ce.yml
+
+# TODO: install docker plugins
+
+- name: Install docker-compose
+  ansible.builtin.import_tasks: docker-compose.yml
+
+- name: docker prune
+  community.docker.docker_prune:
+    builder_cache: true
+    containers: true
+    images: true
+    networks: true
+    volumes: true
+  when: docker_prune
+  become: true  # allows pruning even if ansible_user
+                # is not yet a member of docker group
