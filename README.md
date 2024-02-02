@@ -3,7 +3,7 @@ Features:
 - installs latest docker-ce
 - installs docker python module
 - installs docker-compose
-- TODO: docker plugins
+- (optional) installs support for docker buildx multiarchitecture builds
 - (optional) performs a docker system prune
 
 This role derives from [elgeeko1/elgeeko1-docker-ansible](https://github.com/elgeeko1/elgeeko1-docker-ansible)
@@ -13,7 +13,7 @@ Provisioning host:
 - ansible 2.15 or later
 
 Host that will run docker
-- Ubuntu 22.04 or later (or equivalentr Debian-based Linux distro running apt)
+- Ubuntu 22.04 or later (or equivalent Debian-based distro running apt)
 
 # How to use this role
 
@@ -25,4 +25,6 @@ Add this role to your Ansible playbook file.
 
 ## Variables
 
-- `docker_prune`: prune docker containers, images and networks. Defaults to `true`
+- `docker_prune` (= `true`): prune docker containers, images and networks.
+- `docker_multiarch` (= `false`): install docker buildx for multiarch builds. Configures a docker buildx instance using the docker-container driver and QEMU.
+- `docker_multiarch_builder_name` (= `multiarch`): docker buildx container name for multiarchitecture builds.

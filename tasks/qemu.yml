@@ -1,0 +1,28 @@
+---
+- name: Install qemu
+  ansible.builtin.apt:
+    pkg:
+      - qemu
+      - qemu-user-static
+      - u-boot-qemu
+      - binfmt-support 
+  become: true
+
+- name: Verify hello-world container
+  community.docker.docker_container:
+    name: qemu-test-mips64le
+    image: hello-world
+    pull: true
+    detach: false
+    tty: true
+    auto_remove: true
+    cleanup: true
+    keep_volumes: false
+  changed_when: false
+
+- name: Remove hello-world image
+  community.docker.docker_image:
+    name: hello-world
+    state: absent
+    force_absent: true
+  changed_when: false  # not an interesting change

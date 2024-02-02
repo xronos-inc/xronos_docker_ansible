@@ -1,1 +1,9 @@
+---
+# configure the docker daemon for multiarchtecture builds?
+# configures the docker daemon for containerd-snapshotter
+# and installs qemu
+docker_multiarch: false
+docker_multiarch_builder_name: multiarch
+
+# perform a docker system prune?
 docker_prune: true
