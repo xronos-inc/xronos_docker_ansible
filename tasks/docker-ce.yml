@@ -23,12 +23,6 @@
     state: latest
   become: true
 
-- name: Install docker module for python
-  ansible.builtin.pip:
-    name: docker
-    state: latest
-  become: true
-
 - name: Add {{ ansible_user }} to docker group
   ansible.builtin.user:
     name: "{{ ansible_user }}"
