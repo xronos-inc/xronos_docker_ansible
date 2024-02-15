@@ -2,7 +2,6 @@ galaxy_info:
   role_name: xronos-docker-ansible
   author: Xronos, Inc.
   description: "Ansible role to install docker into Ubuntu systems."
-  license: MIT
   platforms:
     - name: Ubuntu
       versions:
