@@ -7,3 +7,6 @@ docker_multiarch_builder_name: multiarch
 
 # perform a docker system prune?
 docker_prune: true
+
+# docker authentication token
+docker_auth: ""

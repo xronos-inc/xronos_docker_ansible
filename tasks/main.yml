@@ -20,6 +20,10 @@
   ansible.builtin.import_tasks: builder.yml
   when: docker_multiarch
 
+- name: Configure docker authentication
+  ansible.builtin.import_tasks: auth.yml
+  when: docker_auth != ""
+
 - name: docker prune
   community.docker.docker_prune:
     builder_cache: true
