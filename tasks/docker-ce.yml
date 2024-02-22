@@ -1,22 +1,17 @@
 ---
-- name: Add docker GPG apt key
-  ansible.builtin.apt_key:
-    url: 
-    keyring: /etc/apt/trusted.gpg.d/docker.gpg
-  become: true
-
+# download the gpg key and save with extension ".asc", which bypasses the need to dearmor.
+# this is the workaround for the deprecation of ansible.builtin.apt_key for repositories
+# that are not yet 
 - name: Import docker gpg key
-  ansible.builtin.shell:
-    cmd: >
-      curl -sS https://download.docker.com/{{ ansible_system | lower }}/{{ ansible_distribution | lower }}/gpg
-      | gpg --dearmor
-      | tee /etc/apt/trusted.gpg.d/docker.gpg
-    creates: /etc/apt/trusted.gpg.d/docker.gpg
+  ansible.builtin.get_url:
+    url: https://download.docker.com/{{ ansible_system | lower }}/{{ ansible_distribution | lower }}/gpg
+    dest: /etc/apt/trusted.gpg.d/docker.asc
+    mode: 0644
   become: true
 
 - name: Add docker apt repository
   ansible.builtin.apt_repository:
-    repo: "deb https://download.docker.com/{{ ansible_system | lower}}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/docker.asc] https://download.docker.com/{{ ansible_system | lower}}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
     update_cache: true
   become: true
   register: dockerrepo
