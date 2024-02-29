@@ -34,16 +34,8 @@
       - docker
     append: true
   become: true
-  register: dockergroup
+  notify: Reset connection
 
-# yes you really need to reboot on group change, since Ansible
-# connects over an SSH session, it's the most
-# sure-fire way to ensure permissions take effect
-# for something like docker that runs as a service.
-- name: reboot
-  ansible.builtin.reboot:
-    msg: "Ansible reboot - docker role"
-  become: true
-  when:
-    - dockergroup.changed
-    - inventory_hostname != "localhost"
+- name: Reset ssh connection to apply group change
+  ansible.builtin.meta:
+    flush_handlers
