@@ -26,7 +26,7 @@
       - containerd.io
   become: true
 
-- name: Instlal docker module for python
+- name: Install docker module for python
   ansible.builtin.pip:
     name: docker
   become: true
