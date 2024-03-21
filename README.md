@@ -8,8 +8,6 @@ Features:
 - (optional) installs support for docker buildx multiarchitecture builds
 - (optional) performs a docker system prune
 
-This role derives from [elgeeko1/elgeeko1-docker-ansible](https://github.com/elgeeko1/elgeeko1-docker-ansible)
-
 ## Requirements
 
 Provisioning host:
@@ -26,7 +24,7 @@ Add this role to your Ansible playbook file.
 
 ```yaml
 - name: install docker
-  role: xronos-docker-ansible
+  role: xronos_docker_ansible
 ```
 
 ## Variables

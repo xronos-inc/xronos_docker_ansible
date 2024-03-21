@@ -1,5 +1,7 @@
 galaxy_info:
-  role_name: xronos-docker-ansible
+  role_name: xronos_docker_ansible
+  min_ansible_version: "2.15"
+  license: proprietery
   author: Xronos, Inc.
   description: "Ansible role to install docker into Ubuntu systems."
   platforms:
@@ -8,3 +10,4 @@ galaxy_info:
         - all
 collections:
   - community.docker
+  - community.general
