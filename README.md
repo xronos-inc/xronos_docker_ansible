@@ -30,6 +30,8 @@ Add this role to your Ansible playbook file.
 ## Variables
 
 - `docker_prune` (= `true`): prune docker containers, images and networks.
-- `docker_multiarch` (= `false`): install docker buildx for multiarch builds. Configures a docker buildx instance using the docker-container driver and QEMU.
-- `docker_multiarch_builder_name` (= `multiarch`): docker buildx container name for multiarchitecture builds.
+- `docker_multiarch` (= `false`): install QEMU and optionally containerd-shapshot.
+- `docker_multiarch_containerd_snapshot` (= `false`): use containerd-shapshot and create a buildx builder using the `docker-container` driver. Ignored if `docker_multiarch` is false.
+- `docker_multiarch_containerd_builder_name` (= `multiarch`): docker buildx container name for multiarchitecture builds. Used only if `docker_multiarch` and `docker_multiarch_containerd_snapshot` are true.
 - `docker_auth` (= `''`): docker authentication token. When present, is written to the user's docker config.json.
+- `docker_add_ansible_user_to_docker_group` (= `true`): Add current Ansible user to group 'docker'?

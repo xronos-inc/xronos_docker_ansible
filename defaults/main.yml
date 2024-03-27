@@ -3,7 +3,15 @@
 # configures the docker daemon for containerd-snapshotter
 # and installs qemu
 docker_multiarch: false
-docker_multiarch_builder_name: multiarch
+
+# use containerd-snapshot for multiarchitecture builder?
+docker_multiarch_containerd_snapshot: false
+
+# when using containerd-snapshot, name of the builder to create
+docker_multiarch_containerd_builder_name: multiarch
+
+# add ansible user to docker group?
+docker_add_ansible_user_to_docker_group: true
 
 # perform a docker system prune?
 docker_prune: true

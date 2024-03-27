@@ -8,17 +8,21 @@
 - name: Install docker engine
   ansible.builtin.import_tasks: docker-ce.yml
 
+
+
 - name: Configure docker for multiarch building
   when: docker_multiarch
   block:
-  - name: Configure docker daemon for containerd-snapshotter
-    ansible.builtin.include_tasks: daemon-containerd.yml
-
   - name: Install and configure qemu
     ansible.builtin.include_tasks: qemu.yml
+
+  - name: Configure docker daemon for containerd-snapshotter
+    ansible.builtin.include_tasks: containerd-daemon.yml
+    when: docker_multiarch_containerd_snapshot
     
   - name: Configure docker buildx builder
-    ansible.builtin.include_tasks: builder.yml
+    ansible.builtin.include_tasks: containerd-builder.yml
+    when: docker_multiarch_containerd_snapshot
 
 - name: Configure docker authentication
   ansible.builtin.include_tasks: auth.yml

@@ -42,3 +42,4 @@
     name: docker
     state: "{{ daemon_file.changed | ternary('restarted', 'started') }}"
   become: true
+  
