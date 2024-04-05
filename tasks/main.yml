@@ -8,8 +8,6 @@
 - name: Install docker engine
   ansible.builtin.import_tasks: docker-ce.yml
 
-
-
 - name: Configure docker for multiarch building
   when: docker_multiarch
   block:
