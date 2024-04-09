@@ -1,8 +1,11 @@
+# SPDX-FileCopyrightText: © 2024 Xronos Inc.
+# SPDX-License-Identifier: BSD-3-Clause
+---
 galaxy_info:
   role_name: xronos_docker_ansible
   min_ansible_version: "2.15"
-  license: proprietery
-  author: Xronos, Inc.
+  license: BSD-3-Clause
+  company: Xronos Inc.
   description: "Ansible role to install docker into Ubuntu systems."
   platforms:
     - name: Ubuntu
