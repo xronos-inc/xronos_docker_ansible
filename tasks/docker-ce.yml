@@ -29,8 +29,8 @@
   become: true
 
 - name: Install docker module for python
-  ansible.builtin.pip:
-    name: docker
+  ansible.builtin.apt:
+    pkg: python3-docker
   become: true
 
 - name: Add {{ ansible_user }} to docker group
