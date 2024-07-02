@@ -4,7 +4,6 @@
 - name: Install qemu
   ansible.builtin.apt:
     pkg:
-      - qemu
       - qemu-user-static
       - u-boot-qemu
       - binfmt-support 
