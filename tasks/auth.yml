@@ -28,7 +28,7 @@
     docker_config_updated: "{{ docker_config_original | combine(
         {
           'auths': {
-            'https://index.docker.io/v1/': {
+            docker_auth_registry: {
               'auth': docker_auth
             }
           }
