@@ -1,5 +1,11 @@
-# SPDX-FileCopyrightText: © 2024 Xronos Inc.
+# SPDX-FileCopyrightText: © 2021 Jeff C. Jensen
+# SPDX-License-Identifier: MIT
+#
+# Modifications Copyright © 2024 Xronos Inc.
 # SPDX-License-Identifier: BSD-3-Clause
+#
+# This file contains portions from Jeff C. Jensen under MIT 
+# and modifications by Xronos Inc. under BSD-3-Clause.
 ---
 galaxy_info:
   role_name: xronos_docker_ansible
