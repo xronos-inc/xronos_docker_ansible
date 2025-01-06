@@ -1,7 +1,7 @@
-# SPDX-FileCopyrightText: © 2021 Jeff C. Jensen
+# SPDX-FileCopyrightText: (c) 2021 Jeff C. Jensen
 # SPDX-License-Identifier: MIT
 #
-# Modifications Copyright © 2024 Xronos Inc.
+# Modifications Copyright (c) 2024 Xronos Inc.
 # SPDX-License-Identifier: BSD-3-Clause
 #
 # This file contains portions from Jeff C. Jensen under MIT 
@@ -15,14 +15,20 @@ docker_multiarch: false
 docker_multiarch_containerd_snapshot: false
 
 # when using containerd-snapshot, name of the builder to create
-docker_multiarch_containerd_builder_name: default
+docker_multiarch_containerd_builder_name: multiarch
 
 # add ansible user to docker group?
 docker_add_ansible_user_to_docker_group: true
 
 # perform a docker system prune?
-docker_prune: true
+docker_prune: false
 
 # docker authentication token
 docker_auth: ""
 docker_auth_registry: "https://index.docker.io/v1/"
+
+## versions
+docker_version:
+docker_buildx_version:
+docker_compose_version:
+python3_docker_version:

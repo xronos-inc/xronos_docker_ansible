@@ -1,7 +1,7 @@
-# SPDX-FileCopyrightText: © 2021 Jeff C. Jensen
+# SPDX-FileCopyrightText: (c) 2021 Jeff C. Jensen
 # SPDX-License-Identifier: MIT
 #
-# Modifications Copyright © 2024 Xronos Inc.
+# Modifications Copyright (c) 2024 Xronos Inc.
 # SPDX-License-Identifier: BSD-3-Clause
 #
 # This file contains portions from Jeff C. Jensen under MIT 
@@ -10,46 +10,46 @@
 # download the gpg key and save with extension ".asc", which bypasses the need to dearmor.
 # this is the workaround for the deprecation of ansible.builtin.apt_key for repositories
 # that are not yet 
-- name: Import docker gpg key
+- name: Apt import docker gpg
+  become: true
   ansible.builtin.get_url:
     url: https://download.docker.com/{{ ansible_system | lower }}/{{ ansible_distribution | lower }}/gpg
     dest: /etc/apt/trusted.gpg.d/docker.asc
     mode: 0644
-  become: true
 
-- name: Add docker apt repository
+- name: Apt docker apt repository
+  register: dockerrepo
+  become: true
   ansible.builtin.apt_repository:
     repo: "deb [signed-by=/etc/apt/trusted.gpg.d/docker.asc] https://download.docker.com/{{ ansible_system | lower}}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
     update_cache: true
-  become: true
-  register: dockerrepo
 
-- name: Install docker
+- name: Apt install docker {{ docker_version if docker_version else 'latest' }}
+  become: true
   ansible.builtin.apt:
     pkg:
-      - docker-ce
-      - docker-ce-cli
-      - docker-ce-rootless-extras
-      - docker-buildx-plugin
-      - docker-compose-plugin
-      - containerd.io
-  become: true
+      - docker-ce{{ '=' ~ docker_version if docker_version else '' }}
+      - docker-ce-cli{{ '=' ~ docker_version if docker_version else '' }}
+      - docker-ce-rootless-extras{{ '=' ~ docker_version if docker_version else '' }}
+      - docker-buildx-plugin{{ '=' ~ docker_buildx_version if docker_buildx_version else '' }}
+      - docker-compose-plugin{{ '=' ~ docker_compose_version if docker_compose_version else '' }}
 
-- name: Install docker module for python
-  ansible.builtin.apt:
-    pkg: python3-docker
+- name: Apt install docker module for python {{ python3_docker_version if python3_docker_version else 'latest' }}
   become: true
+  ansible.builtin.apt:
+    pkg: python3-docker{{ '=' ~ python3_docker_version if python3_docker_version else '' }}
 
 - name: Add {{ ansible_user }} to docker group
+  when: docker_add_ansible_user_to_docker_group
+  register: _docker_group
+  become: true
   ansible.builtin.user:
     name: "{{ ansible_user }}"
     groups:
       - docker
     append: true
-  become: true
-  notify: Reset connection
-  when: docker_add_ansible_user_to_docker_group
 
-- name: Reset ssh connection to apply group change
+- name: Reset connection to apply group change
+  changed_when: false
   ansible.builtin.meta:
-    flush_handlers
+    reset_connection

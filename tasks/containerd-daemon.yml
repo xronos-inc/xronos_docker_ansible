@@ -1,7 +1,7 @@
-# SPDX-FileCopyrightText: © 2021 Jeff C. Jensen
+# SPDX-FileCopyrightText: (c) 2021 Jeff C. Jensen
 # SPDX-License-Identifier: MIT
 #
-# Modifications Copyright © 2024 Xronos Inc.
+# Modifications Copyright (c) 2024 Xronos Inc.
 # SPDX-License-Identifier: BSD-3-Clause
 #
 # This file contains portions from Jeff C. Jensen under MIT 
@@ -36,18 +36,18 @@
         } )}}"
 
 - name: Write daemon.json
+  when: docker_daemon_updated != docker_daemon_original
+  register: daemon_file
+  become: true
   ansible.builtin.copy: 
     content: "{{ docker_daemon_updated | to_nice_json }}" 
     dest: /etc/docker/daemon.json
     backup: true
     force: true 
-  become: true
-  when: docker_daemon_updated != docker_daemon_original
-  register: daemon_file
-
+  
 - name: Restart docker service to apply new daemon configuration
+  when: daemon_file.changed
+  become: true
   ansible.builtin.service:
     name: docker
     state: "{{ daemon_file.changed | ternary('restarted', 'started') }}"
-  become: true
-  
